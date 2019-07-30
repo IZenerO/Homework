@@ -11,12 +11,13 @@ int main () {
     uint32_t last_three_sum = 0;
     uint32_t remainder = 1;
     const uint32_t DIVIDER = 10;
-    const uint32_t MID = count / 2;
     const uint32_t MAX_NUMBER_OF_DIGITS = 6;
 
     while ((user_num /= DIVIDER) > 0) {
       count++;
     }
+    const uint32_t MID = count / 2;
+
     if (NUM < 0 || count < MAX_NUMBER_OF_DIGITS || count > MAX_NUMBER_OF_DIGITS) {
       std::cout << "You entered wrong number!" << std::endl;
       continue;
@@ -26,7 +27,6 @@ int main () {
       temp = (NUM / remainder) % 10;
       first_three_sum += temp;
       remainder *= DIVIDER;
-      std::cout << first_three_sum;
     }
     for (int i = 0; i < MID; i++) {
       uint32_t temp = 0;
@@ -35,12 +35,12 @@ int main () {
       remainder *= DIVIDER;
     }
     if (first_three_sum != last_three_sum) {
-      std::cout << "It's unlucky ticket, better luck next time!" << std::endl;
+      std::cout << "It's an unlucky ticket, better luck next time!" << std::endl;
       continue;
     } 
     if (first_three_sum == last_three_sum) {
       std::cout << "It's a lucky ticket!" << std::endl;
-      return 0;
+      break;
     }
   }
 }
