@@ -18,7 +18,7 @@ int main () {
       std::cin >> num;
       if (num <= LOW_RANGE_VALUE || num >= HIGH_RANGE_VALUE) {
       std::cout << "You entered number out of range!" << std::endl;
-      i -= 1;
+      i--;
       continue;
     }
       std::cout << std::endl;
