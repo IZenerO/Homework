@@ -8,15 +8,14 @@ int main () {
 
   char *begin = user_str;
   char *end = user_str + ARRAY_SIZE;
-  char count = 0;
   std::cout << "Your string in upper register: ";
-  while (begin != end) {
-    if (*begin >= 'a' && *begin <= 'z') {
-      *begin += 'A' - 'a';
-      std::cout << *begin;
-    } else {
-      std::cout << *begin;
+  const char TO_UPPER = 'A' - 'a'; 
+  while (begin != end && *begin != '\0') {
+    char& ch = *begin;
+    if (ch >= 'a' && ch <= 'z') {
+      ch += TO_UPPER;
     }
-    *(begin++) = ++count;
+    std::cout << ch; 
+    ++begin;
   }
 }
