@@ -2,14 +2,14 @@
 
 int main () {
   while (true) {
-    std::cout << "How much numbers you want to enter? " << std::endl;
+    std::cout << "Enter amount of numbers you want to work with: " << std::endl;
     uint32_t count_num;
     std::cin >> count_num;
 
     std::cout << "Please, enter your numbers: " << std::endl;
-    uint32_t num;
-    uint32_t sum = 0;
-    for (int i = 0; i < count_num; i++) {
+    unsigned long int sum = 0;
+    for (size_t i = 0; i < count_num; i++) {
+      uint32_t num;
       std::cin >> num;
       sum += num;
     }
@@ -18,7 +18,6 @@ int main () {
       break;
     } else {
       std::cout << "No" << std::endl;
-      continue;
     }
   }
   return 0;
