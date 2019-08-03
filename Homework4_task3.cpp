@@ -8,15 +8,14 @@ int main () {
 
   char *begin = user_str;
   char *end = user_str + ARRAY_SIZE;
-  char count = 0;
   std::cout << "Your string in lower register: ";
-  while (begin != end) {
-    if (*begin >= 'A' && *begin <= 'Z') {
-      *begin += 'a' - 'A';
-      std::cout << *begin;
-    } else {
-      std::cout << *begin;
-    }
-    *(begin++) = ++count;
+  const char TO_LOWER = 'a' - 'A';
+  while (begin != end && *begin != '\0') {
+    char& ch = *begin;
+    if (ch >= 'A' && ch <= 'Z') {
+      ch += TO_LOWER;
+    } 
+    std::cout << ch; 
+    ++begin;
   }
 }
