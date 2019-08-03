@@ -6,30 +6,26 @@ void swap(char &start, char &end)
   start = end;
   end = temp;
 }
-int arr_len (const char* temp) {
-  const char* current = temp;
-  for (; *current; ++current);
-  return current - temp;
+ ptrdiff_t arr_len (const char* temp) {
+  size_t count = 0;
+  while (*temp++) {
+    ++count;
+  }
+  return count;
 }
 
 int main () {
   const uint32_t ARRAY_SIZE = 300;
   std::cout << "Enter your string to revers it: ";
-  char user_str [ARRAY_SIZE];
+  char user_str [ARRAY_SIZE] = {};
   std::cin >> user_str;
 
   char *begin = user_str;
-  char *end = user_str + ARRAY_SIZE;
-  char *end_of_array = user_str + (ARRAY_SIZE - 1);
-  int len = arr_len(begin);
+  char *end_of_array = user_str + (arr_len(begin) - 1);
   while (begin <= end_of_array) {
     auto& ch_first = *begin++;
     auto& ch_second = *end_of_array--;
     swap(ch_first, ch_second);
   }
-  begin = user_str + (ARRAY_SIZE - len);
-  while (begin != end) {
-    std::cout << "Your reversed string: " << *begin;
-    begin++;
-  }
+   std::cout << user_str << "\n";
 }
