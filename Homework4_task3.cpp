@@ -11,11 +11,10 @@ int main () {
   std::cout << "Your string in lower register: ";
   const char TO_LOWER = 'a' - 'A';
   while (begin != end && *begin != '\0') {
-    char& ch = *begin;
+    char& ch = *begin++;
     if (ch >= 'A' && ch <= 'Z') {
       ch += TO_LOWER;
     } 
     std::cout << ch; 
-    ++begin;
   }
 }
