@@ -11,11 +11,10 @@ int main () {
   std::cout << "Your string in upper register: ";
   const char TO_UPPER = 'A' - 'a'; 
   while (begin != end && *begin != '\0') {
-    char& ch = *begin;
+    char& ch = *begin++;
     if (ch >= 'a' && ch <= 'z') {
       ch += TO_UPPER;
     }
     std::cout << ch; 
-    ++begin;
   }
 }
