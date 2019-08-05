@@ -6,7 +6,7 @@ void swap(char &start, char &end)
   start = end;
   end = temp;
 }
- ptrdiff_t arr_len (const char* temp) {
+ size_t arr_len (const char* temp) {
   size_t count = 0;
   while (*temp++) {
     ++count;
