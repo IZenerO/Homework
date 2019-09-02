@@ -2,15 +2,13 @@
 #include "Homework11_matrix.hpp"
 
 int main () {
-  Matrix m{10};
-  for (int i = 0; i < m.GetSize(); ++i) {
-    for (int j = 0; j < m.GetSize(); ++j) {
-      std::cout << i << " " << j << " " << "m.GetSize() = " << m.GetSize() <<" loop call ";
-      m(i,j) = 20;
-      std::cout << i << " " << j << " " << "loop call ";
-    }
-  }
-  // m(0,0) = 5;
-  // std::cout << m(0,0);
-  //m.show();
+  Matrix m{8}, m1 {8};
+  m.Fill(100);
+  m1.Fill(100);
+  m.show();
+  //m1.show();
+  // m = m + m1;
+  // m = m - m1;
+  m = m * 5;
+  m.show();
 }
