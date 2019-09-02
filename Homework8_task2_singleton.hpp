@@ -4,10 +4,10 @@ public:
   int add(int value);
   void show () const;
 private:
-  Singleton();
+  Singleton() {};
   Singleton(const Singleton& ms) = delete;
   Singleton& operator=(const Singleton& ms) = delete;
-  ~Singleton();
+  ~Singleton() {};
 
   static const unsigned ARRAY_SIZE = 255;
   int array[ARRAY_SIZE] {};
