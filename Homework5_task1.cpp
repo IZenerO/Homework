@@ -19,7 +19,7 @@ size_t arr_len (const char* temp) {
   return count;
 }
 int strcmp (const char* str1, const char* str2) {
-  if (str1 && str2 != nullptr) {
+  if (str1 != nullptr && str2 != nullptr) {
     while (*str1 && *str1 == *str2) {
       ++str1;
       ++str2;
@@ -46,39 +46,7 @@ EnumTest check (const char *str ) {
     }
   }
 }
-
-char* print (char *start, char *end) {
-  if (start && end != nullptr) {
-    char arr[SIZE_FOR_ARRAYS] {};
-    std::cin >> arr;
-    char *begin_arr = arr;
-    char * const end_arr = arr + arr_len(begin_arr);
-    if (*begin_arr != '\0' && *start == '\0' && start != end) {
-      while (begin_arr != end_arr) {
-        *start++ = *begin_arr++;
-      }
-      return start;
-    }
-    if (*begin_arr != '\0' && *start != '\0' && start != end) {
-      char temp_print_arr [SIZE_FOR_ARRAYS] {};
-      char *first_of_temp = temp_print_arr;
-      char * const last_of_temp = temp_print_arr + arr_len(start);
-      char *iter_main_buff = start;
-      while (first_of_temp != last_of_temp) {
-        *first_of_temp++ = *iter_main_buff++;
-      }
-      while (begin_arr != end_arr) {
-        *start++ = *begin_arr++;
-      }
-      first_of_temp = temp_print_arr;
-      while (first_of_temp != last_of_temp) {
-        *start++ = *first_of_temp++;
-      }
-      return (iter_main_buff - 1);
-    }
-  }
-}
-char* copy(char* dst, const char* src, char* end_of_src) {
+char* copy(char* dst, char* src, char* end_of_src) {
   if ((dst != nullptr && src != nullptr && end_of_src != nullptr)) {
       while (src != end_of_src) { 
         *dst++ = *src++;
@@ -86,9 +54,36 @@ char* copy(char* dst, const char* src, char* end_of_src) {
     return dst;
   }
 }
-char *move (char *start) {
-  if (start != nullptr) {
-    char way[5] {};
+char* print (char *start, char *end) {
+  if (start != nullptr && end != nullptr && start != end) {
+    char arr[SIZE_FOR_ARRAYS] {};
+    std::cin >> arr;
+    char *begin_arr = arr;
+    char *end_arr = arr + arr_len(begin_arr);
+    if (*begin_arr != '\0' && *start == '\0') {
+      while (begin_arr != end_arr) {
+        *start++ = *begin_arr++;
+      }
+      return start;
+    }
+    if (*begin_arr != '\0' && *start != '\0') {
+      char temp_print_arr [SIZE_FOR_ARRAYS] {};
+      char *first_of_temp = temp_print_arr;
+      char *last_of_temp = temp_print_arr + arr_len(start);
+      char *iter_main_buff = start;
+      copy(first_of_temp, iter_main_buff, end);
+      while (begin_arr != end_arr) {
+        *start++ = *begin_arr++;
+      }
+      first_of_temp = temp_print_arr;
+      copy(start, first_of_temp, last_of_temp);
+      return start;
+    }
+  }
+}
+char *move (char *start, char *end) {
+  if (start != nullptr && end != nullptr) {
+    char way[] {};
     uint32_t num;
     std::cin >> way >> num;
     if (strcmp(way, "left") == 0) {
@@ -97,10 +92,14 @@ char *move (char *start) {
       start += num;
       }
   }
+  if (start >= end) {
+    std::cout << "Out of range!" << std::endl;
+    return 0;
+  }
   return start; 
 }
 char* cut (char *start, char *end) {
-  if (start && end != nullptr) {
+  if (start != nullptr && end != nullptr) {
     char *returned_end = end - 1;
     char * const new_end = start + arr_len(start);
     while (start != new_end) {
@@ -117,7 +116,7 @@ int main () {
   uint32_t start_position;
   uint32_t end_position;
   while (true) {
-    std::cout << "Enter you commnad and text: ";
+    std::cout << "Enter you command and text: ";
     char command[10] {};
     std::cin >> command;
     size_t type = check(command);
@@ -133,26 +132,35 @@ int main () {
       std::cin >> start_position >> end_position;
       if (start_position >= SIZE_FOR_ARRAYS || end_position >= SIZE_FOR_ARRAYS) {
         std::cout << "Your position is out of range!";
-        return 0;
+        start_position = 0;
+        end_position = 0;
       }
     }  
     break;
     case COPY: {
-      copy(temp_arr, user_arr + start_position, user_arr + start_position + end_position);
+      if (start_position != 0 && end_position != 0) {
+        copy(temp_arr, user_arr + start_position, user_arr + start_position + end_position);
+      } else {
+        std::cout << "You didn`t select word!" << std::endl;
+      }
     } 
     break;
     case PASTE: {
-      start_position = 0;
-      end_position = 0;
-      char *end_of_temp = temp_arr + arr_len(temp_arr);
-      copy(begin, temp_arr, end_of_temp);
-      begin += arr_len(begin);
+      if (*temp_arr != '\0') {
+        start_position = 0;
+        end_position = 0;
+        char *end_of_temp = temp_arr + arr_len(temp_arr);
+        copy(begin, temp_arr, end_of_temp);
+        begin += arr_len(begin);
+      } else {
+        std::cout << "You didn`t copy any word, unable to paste." << std::endl;
+      }
     } 
     break;
     case MOVE: {
       start_position = 0;
       end_position = 0;
-      begin = move(begin);
+      begin = move(begin, end);
     } 
     break;
     case CUT: {
