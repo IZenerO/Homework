@@ -20,13 +20,27 @@ Matrix::Matrix (const Matrix &mc) {
       Matrix_arr[i][j] = mc.Matrix_arr[i][j];
     }
   }
-
 }
 
 int & Matrix::operator() (int row, int col) {
   return Matrix_arr[row][col];
 }
-
+Matrix &Matrix::operator= (const Matrix &right) {
+  if (this != &right) {
+    delete [] Matrix_arr;
+    Size = right.Size; 
+    Matrix_arr = new int *[Size]; 
+    for(int i = 0; i < Size; ++i) {
+      Matrix_arr[i] = new int[Size];
+    }
+    for (int i = 0; i < Size; ++i) {
+      for (int j = 0; j < Size; ++j) {
+        Matrix_arr[i][j] = right.Matrix_arr[i][j];
+      }
+    }
+  }
+  return *this;
+}
 const int Matrix::GetSize () const {
   return Size;
 }
