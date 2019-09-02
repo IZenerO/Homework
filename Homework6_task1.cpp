@@ -48,5 +48,5 @@ int main () {
     return 0;
   }
   decrypt(begin, end, decr_key);
-  std::cout << "Your decrypted string: " << array;
+  std::cout << "Your decrypted string: " << array; 
 }
