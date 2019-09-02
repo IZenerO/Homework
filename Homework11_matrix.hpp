@@ -12,6 +12,7 @@ class Matrix {
     const Matrix operator- (const Matrix& val);
     const Matrix operator* (Matrix &val);
     const Matrix operator* (int scalar);
+    Matrix & operator= (const Matrix &right);
     void Add_Element (int value);
     void show ();
   private:
