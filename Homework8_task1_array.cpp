@@ -35,3 +35,26 @@ void Array::show () const {
     std::cout << array[i] << " ";
   }
 }
+
+bool Array::bubble_sort () {
+  int temp = 0;
+  for (uint32_t i = 0; i < ARRAY_SIZE - 1; ++i) {
+    for(uint32_t j = 0; j < ARRAY_SIZE - 1; ++j) {
+      if (array[j] > array[j + 1]) {
+        temp = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+      }
+    }
+  }
+  return true;
+}
+
+int Array::get_value(uint32_t position) {
+  if (position > ARRAY_SIZE || position < 0) {
+    std::cout << "Element with this position doesn't exist!";
+  } else {
+    std::cout << "Element with this position is: " << array[position];
+  }
+  return array[position];
+}
