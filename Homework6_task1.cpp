@@ -9,16 +9,18 @@ size_t arr_len (const char* temp) {
 }
 
 void crypt (char *start, const char *end, uint32_t key) {
-  if(start && end != nullptr) {
+  if(start != nullptr && end != nullptr && start != end && key > 0) {
     while (start != end) {
-      *start++ = *start + key;
+      *start = *start + key;
+      ++start;
     }
   }
 }
 void decrypt (char *start, const char *end, uint32_t key) {
-  if(start && end != nullptr) {
+  if(start != nullptr && end != nullptr && start != end && key > 0) {
     while (start != end) {
-      *start++ = *start - key;
+      *start = *start - key;
+      ++start;
     }
   }
 }

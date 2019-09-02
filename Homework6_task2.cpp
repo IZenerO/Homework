@@ -1,17 +1,17 @@
 #include <iostream>
 #include <functional>
-#include <time.h> 
+#include <chrono> 
 
 using comparator = std::function<bool(int a, int b)>;
 
-void bubble_sort (int *start, int size, comparator (comp)) {
-  size_t temp = 0;
-  for (int i = 0; i < size - 1; ++i) {
-    for(int j = 0; j < size - 1; ++j) {
-      if (comp(*(start + j), *(start + j + 1))) {
-        temp = *(start + j);
-        *(start + j) = *(start + j + 1);
-        *(start + j + 1) = temp;
+void bubble_sort (int *arr, uint32_t size, comparator comp) {
+  int temp = 0;
+  for (uint32_t i = 0; i < size - 1; ++i) {
+    for(uint32_t j = 0; j < size - 1; ++j) {
+      if (comp(arr[j], arr[j + 1])) {
+        temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
       }
     }
   }
@@ -69,17 +69,23 @@ int main () {
   
   std::cout << "Unsorted\n";
   show(first_array, ARRAY_SIZE);
-  bubble_sort(begin_of_first, ARRAY_SIZE, [](int a, int b) {return a < b;});
+  auto start_bubblesort = std::chrono::steady_clock::now();
+  bubble_sort(first_array, ARRAY_SIZE, [](int a, int b) {return a < b;});
+  auto end_bubblesort = std::chrono::steady_clock::now();
+  std::chrono::duration<double> diff = end_bubblesort-start_bubblesort;
   std::cout << "Bubble sort\n";
   show(first_array, ARRAY_SIZE);
-  std::cout << "Bubble sort time:" << (static_cast<double>(clock() - t) / CLOCKS_PER_SEC) << std::endl;
+  std::cout << "Bubble sort time:" << diff.count() << std::endl;
  
 
   std::cout << "Unsorted\n";
   show(second_array, ARRAY_SIZE);
+  auto start_for_quicksort = std::chrono::steady_clock::now();
   quickSort(second_array, 0, ARRAY_SIZE - 1);
+  auto end_for_quicksort = std::chrono::steady_clock::now();
+  std::chrono::duration<double> diff_quicksort = end_for_quicksort-start_for_quicksort;
   std::cout << "Quick sort\n";
   show(second_array, ARRAY_SIZE);
-  std::cout << "Quick sort time:" << (static_cast<double>(clock() - t) / CLOCKS_PER_SEC) << std::endl;
+  std::cout << "Quick sort time:" << diff_quicksort.count() << std::endl;
   return 0;
 }
