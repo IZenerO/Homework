@@ -7,7 +7,8 @@ enum EnumTest{
   PASTE,
   MOVE,
   CUT,
-  SHOW
+  SHOW,
+  UNDEFINED
 };
 size_t arr_len (const char* temp) {
   size_t count = 0;
@@ -45,16 +46,18 @@ EnumTest check (const char *str ) {
       return SHOW;
     }
   }
+  return UNDEFINED;
 }
-char* copy(char* dst, char* src, char* end_of_src) {
+char* copy(char* dst, char* src, const char* end_of_src) {
   if ((dst != nullptr && src != nullptr && end_of_src != nullptr)) {
       while (src != end_of_src) { 
         *dst++ = *src++;
       }
     return dst;
   }
+  return dst;
 }
-char* print (char *start, char *end) {
+char* print (char *start, const char *end) {
   if (start != nullptr && end != nullptr && start != end) {
     char arr[SIZE_FOR_ARRAYS] {};
     std::cin >> arr;
@@ -70,20 +73,19 @@ char* print (char *start, char *end) {
       char temp_print_arr [SIZE_FOR_ARRAYS] {};
       char *first_of_temp = temp_print_arr;
       char *last_of_temp = temp_print_arr + arr_len(start);
-      char *iter_main_buff = start;
-      copy(first_of_temp, iter_main_buff, end);
+      copy(first_of_temp, start, end);
       while (begin_arr != end_arr) {
         *start++ = *begin_arr++;
       }
-      first_of_temp = temp_print_arr;
       copy(start, first_of_temp, last_of_temp);
       return start;
     }
   }
+  return start;
 }
-char *move (char *start, char *end) {
+char *move (char *start, const char *end) {
   if (start != nullptr && end != nullptr) {
-    char way[] {};
+    char way[SIZE_FOR_ARRAYS] {};
     uint32_t num;
     std::cin >> way >> num;
     if (strcmp(way, "left") == 0) {
@@ -94,7 +96,7 @@ char *move (char *start, char *end) {
   }
   if (start >= end) {
     std::cout << "Out of range!" << std::endl;
-    return 0;
+    return start;
   }
   return start; 
 }
@@ -107,6 +109,7 @@ char* cut (char *start, char *end) {
     }
   return returned_end;
   }
+  return start;
 }
 int main () {
   char user_arr[SIZE_FOR_ARRAYS] {};
@@ -146,7 +149,7 @@ int main () {
     } 
     break;
     case PASTE: {
-      if (*temp_arr != '\0') {
+      if (arr_len(temp_arr) != 0) {
         start_position = 0;
         end_position = 0;
         char *end_of_temp = temp_arr + arr_len(temp_arr);
